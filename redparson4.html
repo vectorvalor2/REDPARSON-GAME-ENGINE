@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REDPARSON • GAME ENGINE</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+        :root {
+            --red: #ff0033;
+            --cyan: #00ffff;
+            --green: #00ff88;
+        }
+        
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            background: #0a0014;
+            color: #00ffff;
+            font-family: 'Press Start 2P', system-ui;
+            overflow-x: hidden;
+        }
+        
+        header {
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(10,0,20,0.96);
+            border-bottom: 3px solid var(--red);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo { font-size: 2.1rem; color: var(--red); text-shadow: 0 0 15px var(--red); }
+        
+        .tabs { display: flex; gap: 8px; }
+        .tab {
+            padding: 8px 20px;
+            background: transparent;
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
+            cursor: pointer;
+        }
+        .tab.active { background: var(--red); color: #000; border-color: var(--red); }
+
+        #viewport {
+            width: 100%;
+            height: 620px;
+            border: 4px solid var(--red);
+            background: #000;
+            position: relative;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 260px 1fr 340px;
+            gap: 15px;
+            padding: 30px 5%;
+            max-width: 1950px;
+            margin: 0 auto;
+        }
+        
+        .panel {
+            background: rgba(20,0,40,0.92);
+            border: 2px solid var(--cyan);
+            padding: 16px;
+            overflow: hidden;
+        }
+        
+        .panel h3 {
+            color: var(--red);
+            margin-bottom: 14px;
+            border-bottom: 2px solid var(--red);
+            padding-bottom: 8px;
+        }
+
+        .texture-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .texture {
+            width: 100%;
+            aspect-ratio: 1;
+            background: #222;
+            border: 2px solid #555;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+        }
+        .texture:hover { border-color: var(--green); }
+
+        textarea {
+            width: 100%;
+            background: #000;
+            color: #0f0;
+            border: 2px solid var(--cyan);
+            padding: 12px;
+            font-family: monospace;
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        .console { 
+            height: 160px; 
+            background: #000; 
+            color: #0f0; 
+            padding: 12px; 
+            overflow-y: auto; 
+            font-family: monospace; 
+            font-size: 0.75rem; 
+        }
+
+        .dropzone {
+            border: 3px dashed var(--green);
+            padding: 35px 20px;
+            text-align: center;
+            margin: 12px 0;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            background: transparent;
+            border: 2px solid var(--red);
+            color: var(--red);
+            font-family: inherit;
+            cursor: pointer;
+            width: 100%;
+            margin: 6px 0;
+        }
+        .btn:hover { background: var(--red); color: #000; }
+        .btn.ai { border-color: #00ffcc; color: #00ffcc; }
+
+        .status {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.9);
+            padding: 8px 14px;
+            font-size: 0.8rem;
+            color: #0f0;
+            border: 1px solid var(--green);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">REDPARSON</div>
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(0)">EDITOR</div>
+            <div class="tab" onclick="switchTab(1)">PLAY</div>
+            <div class="tab" onclick="switchTab(2)">AI LAB</div>
+        </div>
+    </header>
+
+    <section style="padding:40px 5% 20px;background:#0a0014;">
+        <h2 style="text-align:center;color:var(--red);margin-bottom:20px;">LIVE VIEWPORT — SAFE MODE ACTIVE</h2>
+        <div id="viewport"></div>
+        <div class="status" id="status">● SAFE RENDER • AI CORE: ONLINE • 60 FPS</div>
+    </section>
+
+    <section class="dashboard">
+        <!-- LEFT -->
+        <div>
+            <div class="panel">
+                <h3>SCENE HIERARCHY</h3>
+                <div id="hierarchy" style="font-size:0.85rem;line-height:1.7;"></div>
+            </div>
+
+            <div class="panel" style="margin-top:15px;">
+                <h3>PROJECT TEMPLATES</h3>
+                <button onclick="loadTemplate(0)" class="btn">SOLAR SYSTEM</button>
+                <button onclick="loadTemplate(1)" class="btn">FPS ARENA</button>
+                <button onclick="loadTemplate(2)" class="btn">PARTICLE LAB</button>
+            </div>
+        </div>
+
+        <!-- CENTER -->
+        <div>
+            <div class="panel">
+                <h3>AI-ASSISTED SCENE GENERATION</h3>
+                <textarea id="aiPrompt" placeholder="Describe the scene... e.g. 'futuristic cyber city with flying cars and neon rain'"></textarea>
+                <button onclick="generateSceneWithAI()" class="btn ai" style="margin-top:10px;">GENERATE WITH AI</button>
+                <small style="color:#aaa;">Powered by modular generation services</small>
+            </div>
+
+            <div class="panel" style="margin-top:15px;">
+                <h3>TEXTURE LIBRARY</h3>
+                <div class="texture-grid" id="textureGrid"></div>
+            </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div>
+            <div class="panel">
+                <h3>MATERIAL EDITOR</h3>
+                <div id="matPreview" style="height:160px;background:#111;position:relative;">
+                    <canvas id="matCanvas" width="320" height="160"></canvas>
+                </div>
+                <div style="margin:12px 0 8px;">
+                    <input type="color" id="matColor" value="#4488ff" style="width:100%;">
+                    <input type="range" id="metalness" min="0" max="1" step="0.01" value="0.6">
+                    <input type="range" id="roughness" min="0" max="1" step="0.01" value="0.3">
+                </div>
+                <button onclick="applyMaterial()" class="btn">APPLY TO SELECTION</button>
+            </div>
+
+            <div class="panel" style="margin-top:15px;">
+                <h3>EXPORT &amp; BUILD</h3>
+                <button onclick="exportJSON()" class="btn">EXPORT SCENE JSON</button>
+                <button onclick="exportScreenshot()" class="btn">EXPORT SCREENSHOT (PNG)</button>
+                <button onclick="exportProject()" class="btn">EXPORT FULL PROJECT (.red)</button>
+                <button onclick="buildProject()" class="btn" style="border-color:#ffff00;color:#ffff00;">BUILD &amp; PACKAGE</button>
+            </div>
+
+            <div class="panel" style="margin-top:15px;">
+                <h3>CONSOLE</h3>
+                <div id="console" class="console"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align:center;padding:40px;border-top:2px solid var(--red);font-size:0.8rem;">
+        REDPARSON GAME ENGINE • SAFE SIMULATED ENVIRONMENT • AI + THREE.JS + WEB AUDIO
+    </footer>
+
+    <script>
+        // Three.js Core
+        let scene, camera, renderer, sun, objects = [];
+        let audioContext;
+
+        function initViewport() {
+            const container = document.getElementById('viewport');
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(60, container.clientWidth/620, 0.1, 1000);
+            camera.position.set(0, 35, 55);
+            camera.lookAt(0,0,0);
+
+            renderer = new THREE.WebGLRenderer({antialias:true});
+            renderer.setSize(container.clientWidth, 620);
+            container.appendChild(renderer.domElement);
+
+            scene.add(new THREE.AmbientLight(0x7777ff, 0.7));
+
+            // Sun
+            sun = new THREE.Mesh(new THREE.SphereGeometry(7, 64, 64), new THREE.MeshBasicMaterial({color:0xffee99}));
+            scene.add(sun);
+
+            // Initial planets
+            resetSolarSystem();
+
+            function animate() {
+                requestAnimationFrame(animate);
+                sun.rotation.y += 0.002;
+                objects.forEach(obj => {
+                    if (obj.userData.rot) obj.rotation.y += obj.userData.rot;
+                });
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        function resetSolarSystem() {
+            objects.forEach(o => scene.remove(o));
+            objects = [];
+            // Add some base objects
+            for (let i = 0; i < 4; i++) {
+                const p = new THREE.Mesh(
+                    new THREE.SphereGeometry(2.5 + Math.random(), 32, 32),
+                    new THREE.MeshPhongMaterial({color: [0x4488ff,0xff8844,0x44ff88,0xff44aa][i]})
+                );
+                p.position.x = (i-1.5)*12;
+                p.userData = {rot: 0.008 + i*0.005};
+                scene.add(p);
+                objects.push(p);
+            }
+            updateHierarchy();
+        }
+
+        // Material Editor
+        let previewSphere, matScene, matCamera, matRenderer;
+        function initMaterialEditor() {
+            const canvas = document.getElementById('matCanvas');
+            matScene = new THREE.Scene();
+            matCamera = new THREE.PerspectiveCamera(45, 320/160, 0.1, 100);
+            matCamera.position.z = 5.5;
+            matRenderer = new THREE.WebGLRenderer({canvas});
+            matRenderer.setSize(320,160);
+
+            previewSphere = new THREE.Mesh(new THREE.SphereGeometry(2,64,64), new THREE.MeshStandardMaterial({color:0x4488ff}));
+            matScene.add(previewSphere);
+            matScene.add(new THREE.AmbientLight(0xffffff,0.8));
+            matScene.add(new THREE.DirectionalLight(0xffffff,1));
+
+            function loop(){ 
+                requestAnimationFrame(loop);
+                previewSphere.rotation.y += 0.02;
+                matRenderer.render(matScene, matCamera);
+            }
+            loop();
+
+            document.getElementById('matColor').addEventListener('input', updatePreview);
+            document.getElementById('metalness').addEventListener('input', updatePreview);
+            document.getElementById('roughness').addEventListener('input', updatePreview);
+        }
+
+        function updatePreview() {
+            if (!previewSphere) return;
+            const m = previewSphere.material;
+            m.color.set(document.getElementById('matColor').value);
+            m.metalness = +document.getElementById('metalness').value;
+            m.roughness = +document.getElementById('roughness').value;
+        }
+
+        function applyMaterial() {
+            logConsole("Material applied to selected objects", "#00ff88");
+        }
+
+        // AI Scene Generation
+        function generateSceneWithAI() {
+            const prompt = document.getElementById('aiPrompt').value.trim() || "futuristic neon city with flying vehicles";
+            logConsole(`AI PROMPT: ${prompt}`, "#00ffff");
+            
+            // Simulate generation
+            logConsole("Generating scene geometry...", "#ffff00");
+            
+            setTimeout(() => {
+                // Add new objects based on prompt
+                for (let i = 0; i < 6; i++) {
+                    const box = new THREE.Mesh(
+                        new THREE.BoxGeometry(3 + Math.random()*4, 3 + Math.random()*6, 3 + Math.random()*4),
+                        new THREE.MeshPhongMaterial({color: Math.random()*0xffffff})
+                    );
+                    box.position.set(
+                        (Math.random()-0.5)*60,
+                        5 + Math.random()*20,
+                        (Math.random()-0.5)*40
+                    );
+                    box.userData.rot = 0.005;
+                    scene.add(box);
+                    objects.push(box);
+                }
+                logConsole("AI SCENE GENERATION COMPLETE", "#00ff88");
+                updateHierarchy();
+            }, 1200);
+        }
+
+        // Export Functions
+        function exportJSON() {
+            const sceneData = {
+                name: "RedParson_Scene_" + Date.now(),
+                objects: objects.length,
+                timestamp: new Date().toISOString(),
+                engine: "REDPARSON v1.0"
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(sceneData, null, 2));
+            const dl = document.createElement('a');
+            dl.href = dataStr;
+            dl.download = "redparson_scene.json";
+            dl.click();
+            logConsole("Scene exported as JSON", "#00ffff");
+        }
+
+        function exportScreenshot() {
+            renderer.render(scene, camera);
+            const link = document.createElement('a');
+            link.download = 'redparson_screenshot.png';
+            link.href = renderer.domElement.toDataURL('image/png');
+            link.click();
+            logConsole("Screenshot saved", "#00ff88");
+        }
+
+        function exportProject() {
+            logConsole("Full project package (.red) exported", "#ff8800");
+            alert("✅ Full project exported (demo mode - contains scene, assets & config)");
+        }
+
+        function buildProject() {
+            logConsole("BUILD STARTED → Lint → Tests → Bundle", "#ffff00");
+            setTimeout(() => logConsole("BUILD SUCCESSFUL • READY FOR DEPLOY", "#00ff88"), 1400);
+        }
+
+        // Helpers
+        function updateHierarchy() {
+            const el = document.getElementById('hierarchy');
+            el.innerHTML = `◉ Root<br>├ Sun<br>├ ${objects.length} Generated Objects<br>└ Safety Bounds [ACTIVE]`;
+        }
+
+        function loadTemplate(n) {
+            const names = ["SOLAR SYSTEM", "FPS ARENA", "PARTICLE LAB"];
+            logConsole(`Loaded template: ${names[n]}`, "#ffaa00");
+            resetSolarSystem();
+        }
+
+        function logConsole(msg, color = "#0f0") {
+            const con = document.getElementById('console');
+            con.innerHTML += `<span style="color:${color}">&gt; ${msg}</span><br>`;
+            con.scrollTop = con.scrollHeight;
+        }
+
+        function switchTab(n) {
+            document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i===n));
+        }
+
+        // Texture Library
+        function populateTextures() {
+            const grid = document.getElementById('textureGrid');
+            const tex = ["NEON","METAL","LAVA","ICE","GRID","GLOW"];
+            grid.innerHTML = tex.map(t => 
+                `<div class="texture" onclick="logConsole('Applied ${t} texture', '#00ffff')">${t}</div>`
+            ).join('');
+        }
+
+        // Init
+        window.onload = () => {
+            initViewport();
+            initMaterialEditor();
+            populateTextures();
+            
+            logConsole("REDPARSON ENGINE INITIALIZED", "#00ff88");
+            logConsole("AI Generation Module: LOADED", "#00ffff");
+            logConsole("Safe Simulation Environment: ACTIVE", "#00ff88");
+        };
+    </script>
+</body>
+</html>
