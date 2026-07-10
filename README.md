@@ -7,12 +7,10 @@ REDPARSON GAME ENGINE:
 #Using https://github.com/vectorvalor2/CyGlobsPythonFramework.git
 
 #ifndef cmp
-
 #define cmp(Expands all existing sections with more detail,
 Refines wording for clarity and impact,
 Adds new subsections for better organization,
 Removes redundant content where applicable);
-
 #endif
 
 linker, preprocessor, & compiler cmds
