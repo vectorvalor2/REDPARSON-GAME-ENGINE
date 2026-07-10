@@ -104,15 +104,15 @@ Build all sections onto the PROGRAM file structure running on top of the safe en
 ]
 
 CLASS RED
-
+[
 Constructor &RED(&Assets(*replicate, &extract, *deduplicate));
 
 &POE << xor << cmp.(WebGL (Three.js) and the Web Audio API) << cmp.CyGlobsPythonFramework << cmp.safe-simulated-game-development-environment;
 
 QUOTAS /= Searchable Objects % Interchangeable Codeblocks;
-
+]
 CLASS POE
-
+[
 Constructor &POE(point of execution);
 
 CPU||PID -> random seeding to the STACK;
@@ -122,7 +122,7 @@ MFT||MVP -> cmd line windows stat;
 GPU||GUI -> cap to jecht to daq;
 
 MMU to Buckets -> Bits to Hex to Batch;
-
+]
 MAIN
 
 &RED(&Discernment(*(WebGL (Three.js) and the Web Audio API), &POE, *CyGlobsPythonFramework)); 
