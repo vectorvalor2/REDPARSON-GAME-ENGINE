@@ -19,7 +19,6 @@ Removes redundant content where applicable);
 linker, preprocessor, & compiler cmds
 
 [
-
 do: cmp
 {
 PROGRAM
@@ -104,7 +103,6 @@ Build the default engine viewport that opens to a space intro — a glowing sun 
 Build all sections onto the PROGRAM file structure running on top of the safe environment, refine the audio synthesis descriptions etc..., and remove the redundant fields
 
 }while(redundant == true;)
-
 ]
 
 CLASS RED
