@@ -45,7 +45,7 @@ Build a responsive marketing landing page and make the engine dashboard adaptive
 
 Build project templates to identify separation of concerns and cross-cutting concerns in the safe simulated game development environment, as for the scene hierarchy and generated scenes, gaming simulations are rendered up to 4k from an architected code generation provisioner, that keeps the engine modular and allows different generation services to be plugged in without coupling the editor to one model
 
-Build a scene modifier to extract projects in assets to generate 3D scenes, game levels, simulations, and particle systems to the engine viewport
+Build a scene modifier to extract assets out of projects to generate 3D scenes, game levels, simulations, and particle systems to the engine viewport
 
 Build the sandbox into a full diagram (CI/CD → sandbox zones with asset registry, safety bounds, transform checkpoints → MVP clip space → safe render output)
 
