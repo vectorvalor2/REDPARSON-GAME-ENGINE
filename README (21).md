@@ -78,8 +78,6 @@ Core Layers Scene ├─ MapLayer │ ├─ terrainGrid │ ├─ portals │ 
 
 Interlock/interlink % interject ui components -> scene hierarchy, asset browser, material editor, scene modifier, projects, textures, performance, console, and GUI settings running on top of the safe simulated environment
 
-Inject onto separation of concerns % cross-cutting concerns
-
 Inject the safe simulated game development environment utilizing core layers to build the workflow
 
 Enable file reader in order to input/output to file
