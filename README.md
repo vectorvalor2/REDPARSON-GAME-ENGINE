@@ -43,7 +43,7 @@ Make all-in-one creative platform with physics engine interactions that sync up 
 
 Build a responsive marketing landing page and make the engine dashboard adaptive, ensure the webpage layout, images, and text automatically resize, shrink, or adapt to look great on any device, from desktop monitors to smartphones
 
-Build project templates for separation of concerns % cross-cutting concerns in the safe simulated game development environment, from the scene hierarchy to the generated scene, gaming simulations are rendered up to 4k from an architected code generation provisioner, that keeps the engine modular and allows different generation services to be plugged in without coupling the editor to one model
+Build project templates to identify separation of concerns and cross-cutting concerns in the safe simulated game development environment, as for the scene hierarchy and generated scenes, gaming simulations are rendered up to 4k from an architected code generation provisioner, that keeps the engine modular and allows different generation services to be plugged in without coupling the editor to one model
 
 Build a scene modifier to extract projects in assets to generate 3D scenes, game levels, simulations, and particle systems to the engine viewport
 
