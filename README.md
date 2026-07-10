@@ -43,7 +43,7 @@ Make all-in-one creative platform with physics engine interactions that sync up 
 
 Build a responsive marketing landing page and make the engine dashboard adaptive, ensure the webpage layout, images, and text automatically resize, shrink, or adapt to look great on any device, from desktop monitors to smartphones
 
-Build project templates to identify separation of concerns and cross-cutting concerns in the safe simulated game development environment, as for the scene hierarchy and generated scenes, gaming simulations are rendered up to 4k from an architected code generation provisioner, that keeps the engine modular and allows different generation services to be plugged in without coupling the editor to one model
+Build project templates to indicate separation of concerns and cross-cutting concerns to the safe simulated game development environment, as for the scene hierarchy and generated scenes, gaming simulations are rendered up to 4k from an architected code generation provisioner, that keeps the engine modular and allows different generation services to be plugged in without coupling the editor to one AI model
 
 Build a scene modifier to extract assets out of projects to generate 3D scenes, game levels, simulations, and particle systems to the engine viewport
 
@@ -51,7 +51,7 @@ Build the sandbox into a full diagram (CI/CD → sandbox zones with asset regist
 
 Build the default engine viewport that opens to a space intro — a glowing sun at center with four planets revolving along faint orbit rings against a distant starfield
 
-Build all sections onto the PROGRAM file structure running on top of the safe environment, refine the audio synthesis descriptions, etc..., and remove the redundant fields
+Build sections to the PROGRAM file structure running on top of the safe environment, refine audio synthesis descriptions, etc..., and remove the redundant fields
 
 }while(redundant == true;) ]
 
