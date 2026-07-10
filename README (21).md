@@ -21,8 +21,51 @@ linker, preprocessor, & compiler cmds
 [
 
 do: cmp
+{
+PROGRAM
+│
+├── Release Plan
+│
+▼
+EPIC
+│
+├── Features
+│
+▼
+SPRINT
+│
+├── Stories
+│
+▼
+GLOB OBJECT
+│
+├── Complete Source Files
+├── Tests
+├── Assets
+├── Documentation
+├── Build Config
+│
+▼
+BUILD
+│
+├── Lint
+├── Unit Tests
+├── Integration Tests
+├── Bundle
+│
+▼
+GIT COMMIT
+│
+▼
+PULL REQUEST
+│
+▼
+MERGE
+│
+▼
+RELEASE
 
-{Interlock/interlink % interject ui components -> scene hierarchy, asset browser, material editor, scene modifier, projects, textures, performance, console, and GUI settings running on top of the safe simulated environment
+Interlock/interlink % interject ui components -> scene hierarchy, asset browser, material editor, scene modifier, projects, textures, performance, console, and GUI settings running on top of the safe simulated environment
 
 Inject onto separation of concerns % cross-cutting concerns
 
@@ -46,7 +89,7 @@ Build the sandbox into a full diagram (CI/CD → sandbox zones with asset regist
 
 Build the default engine viewport that opens to a space intro — a glowing sun at center with four planets revolving along faint orbit rings against a distant starfield
 
-Build the UI section showing all the interlocked panels running on top of the safe environment, refine the audio synthesis descriptions, and remove the redundant fields
+Build all sections onto the PROGRAM file structure running on top of the safe environment, refine the audio synthesis descriptions etc..., and remove the redundant fields
 
 }while(redundant == true;)
 
