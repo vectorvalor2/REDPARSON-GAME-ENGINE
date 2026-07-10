@@ -65,6 +65,18 @@ MERGE
 ▼
 RELEASE
 
+SAFE SIMULATED GAME DEVELOPMENT ENVIRONMENT
+
+                     ┌──────────────────────────────┐
+                     │        CI/CD PIPELINE         │
+                     │  Build → Test → Package       │
+                     └──────────────┬───────────────┘
+                                    │
+                                    ▼
+┌────────────────────────────────────────────────────────────────────┐ │ SAFE SIMULATION SANDBOX │ │ │ │ ┌──────────────────────┐ ┌──────────────────────────┐ │ │ │ BLUE WIREFRAME MAP │ │ ASSET REGISTRY │ │ │ │ - terrain shell │◄──────►│ - models │ │ │ │ - rooms / portals │ │ - textures │ │ │ │ - clip-space grid │ │ - animations │ │ │ └──────────┬───────────┘ └───────────┬──────────────┘ │ │ │ │ │ │ ▼ ▼ │ │ ┌──────────────────────┐ ┌──────────────────────────┐ │ │ │ RED SOLID CUBES │ │ GREEN DASHED CUBES │ │ │ │ Safety Bounds │───────►│ Transform Checkpoints │ │ │ │ - collision tests │ │ - rotation targets │ │ │ │ - spawn limits │ │ - animation states │ │ │ │ - no-risk zones │ │ - rollback anchors │ │ │ └──────────┬───────────┘ └───────────┬──────────────┘ │ │ │ │ │ │ └──────────────┬─────────────────┘ │ │ ▼ │ │ ┌──────────────────────┐ │ │ │ MVP / CLIP SPACE │ │ │ │ Model → View → Project│ │ │ │ Normalize → Validate │ │ │ └──────────┬───────────┘ │ │ ▼ │ │ ┌──────────────────────┐ │ │ │ SAFE RENDER OUTPUT │ │ │ │ - debug overlay │ │ │ │ - stable frame state │ │ │ │ - no destructive ops │ │ │ └──────────────────────┘ │ │ │ └────────────────────────────────────────────────────────────────────┘
+
+Core Layers Scene ├─ MapLayer │ ├─ terrainGrid │ ├─ portals │ └─ collisionShell │ ├─ AssetLayer │ ├─ models │ ├─ props │ ├─ animations │ └─ materials │ ├─ SafetyLayer │ ├─ redBoundingCubes │ ├─ safeSpawnZones │ └─ rollbackPoints │ ├─ TransformLayer │ ├─ greenDashedCheckpoints │ ├─ rotationVectors │ └─ timeStepStates │ └─ RenderLayer ├─ blueWireframeMode ├─ clipSpaceProjection └─ debugToggle
+
 Interlock/interlink % interject ui components -> scene hierarchy, asset browser, material editor, scene modifier, projects, textures, performance, console, and GUI settings running on top of the safe simulated environment
 
 Inject onto separation of concerns % cross-cutting concerns
@@ -122,76 +134,3 @@ MAIN
 /*implies the intelligence to separate the high-quality from the poor, and the genuine from the fake*/
 
 RETURN 0;
-
-SAFE SIMULATED GAME DEVELOPMENT ENVIRONMENT
-
-                         ┌──────────────────────────────┐
-                         │        CI/CD PIPELINE         │
-                         │  Build → Test → Package       │
-                         └──────────────┬───────────────┘
-                                        │
-                                        ▼
-
-┌────────────────────────────────────────────────────────────────────┐
-│                    SAFE SIMULATION SANDBOX                          │
-│                                                                    │
-│   ┌──────────────────────┐        ┌──────────────────────────┐      │
-│   │  BLUE WIREFRAME MAP  │        │   ASSET REGISTRY          │      │
-│   │  - terrain shell     │◄──────►│   - models                │      │
-│   │  - rooms / portals   │        │   - textures              │      │
-│   │  - clip-space grid   │        │   - animations            │      │
-│   └──────────┬───────────┘        └───────────┬──────────────┘      │
-│              │                                │                     │
-│              ▼                                ▼                     │
-│   ┌──────────────────────┐        ┌──────────────────────────┐      │
-│   │ RED SOLID CUBES      │        │ GREEN DASHED CUBES        │      │
-│   │ Safety Bounds        │───────►│ Transform Checkpoints      │      │
-│   │ - collision tests    │        │ - rotation targets         │      │
-│   │ - spawn limits       │        │ - animation states         │      │
-│   │ - no-risk zones      │        │ - rollback anchors         │      │
-│   └──────────┬───────────┘        └───────────┬──────────────┘      │
-│              │                                │                     │
-│              └──────────────┬─────────────────┘                     │
-│                             ▼                                       │
-│                  ┌──────────────────────┐                           │
-│                  │ MVP / CLIP SPACE      │                           │
-│                  │ Model → View → Project│                           │
-│                  │ Normalize → Validate  │                           │
-│                  └──────────┬───────────┘                           │
-│                             ▼                                       │
-│                  ┌──────────────────────┐                           │
-│                  │ SAFE RENDER OUTPUT    │                           │
-│                  │ - debug overlay       │                           │
-│                  │ - stable frame state  │                           │
-│                  │ - no destructive ops  │                           │
-│                  └──────────────────────┘                           │
-│                                                                    │
-└────────────────────────────────────────────────────────────────────┘
-
-Core Layers
-Scene
- ├─ MapLayer
- │   ├─ terrainGrid
- │   ├─ portals
- │   └─ collisionShell
- │
- ├─ AssetLayer
- │   ├─ models
- │   ├─ props
- │   ├─ animations
- │   └─ materials
- │
- ├─ SafetyLayer
- │   ├─ redBoundingCubes
- │   ├─ safeSpawnZones
- │   └─ rollbackPoints
- │
- ├─ TransformLayer
- │   ├─ greenDashedCheckpoints
- │   ├─ rotationVectors
- │   └─ timeStepStates
- │
- └─ RenderLayer
-     ├─ blueWireframeMode
-     ├─ clipSpaceProjection
-     └─ debugToggle
