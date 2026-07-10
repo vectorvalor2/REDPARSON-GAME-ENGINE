@@ -51,7 +51,7 @@ Build the sandbox into a full diagram (CI/CD → sandbox zones with asset regist
 
 Build the default engine viewport that opens to a space intro — a glowing sun at center with four planets revolving along faint orbit rings against a distant starfield
 
-Build sections to the PROGRAM file structure running on top of the safe environment, refine audio synthesis descriptions, etc..., and remove the redundant fields
+Build sub-sections to the PROGRAM file structure running on top of the safe environment, refine audio synthesis descriptions, etc..., and remove the redundant fields
 
 }while(redundant == true;) ]
 
