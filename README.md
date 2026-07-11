@@ -41,9 +41,9 @@ Enable interactive placement, create project library, create texture library, an
 
 Make all-in-one creative platform with physics engine interactions that sync up to an audio synthesis layer, triggering unique sound effects based on the intensity and frequency of physics collisions and particle bursts within the scene. The sound effects parameterize the SFX by collision intensity (relative velocity) and frequency (recent collision rate), with per-event randomization so each burst sounds unique
 
-Build an NPC behavior editor with a node-based AI scripting system
-
 Build a responsive marketing landing page and make the engine dashboard adaptive, ensure the webpage layout, images, and text automatically resize, shrink, or adapt to look great on any device, from desktop monitors to smartphones
+
+Build an NPC behavior editor with a node-based AI scripting system
 
 Build project templates for managing, monitoring, identifying, and indicing separation of concerns and cross-cutting concerns to the safe simulated game development environment, as for generating scene hierarchies in scenes, gaming simulations are rendered up to 4k from an architected code generation provisioner, that keeps the engine modular and allows different generation services to be plugged in without coupling the editor to one AI model
 
